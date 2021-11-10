@@ -32,6 +32,11 @@ class App {
         this.play(userInput);
       }
     }
+    if (e.target.id === 'game-restart-button') {
+      this.$input.value = '';
+      this.setState({ answer: getAnswer(), strike: 0, ball: 0 });
+      this.render('');
+    }
   }
 
   play(userInput) {
