@@ -10,3 +10,18 @@ export function getAnswer() {
 
   return answer;
 }
+
+export function getHint(state) {
+  const { strike, ball } = state;
+
+  if (!strike && !ball) {
+    return '낫싱';
+  }
+  if (strike && ball) {
+    return `${strike}스트라이크 ${ball}볼`;
+  }
+  if (strike) {
+    return `${strike}스트라이크`;
+  }
+  return `${ball}볼`;
+}

@@ -1,5 +1,6 @@
-import { getAnswer } from '../utils/game.js';
+import { getAnswer, getHint } from '../utils/game.js';
 import { getIsValid } from '../utils/validator.js';
+import { ANSWER_MATCH_TEXT } from '../utils/constant.js';
 
 class App {
   constructor($target) {
@@ -13,7 +14,7 @@ class App {
       ball: 0,
     };
     this.initialize();
-    this.render();
+    this.render('');
   }
 
   initialize() {
@@ -47,6 +48,8 @@ class App {
       }
     });
     this.setState({ strike: strike, ball: ball });
+
+    this.render(getHint(this.state));
   }
 
   setState(newState) {
@@ -57,11 +60,11 @@ class App {
     console.log(this.state);
   }
 
-  render() {
-    this.$resultTag.innerHTML = '';
-    const result = document.createElement('div');
-    result.innerHTML = '레이아웃 테스트';
-    this.$resultTag.appendChild(result);
+  render(text) {
+    this.$resultTag.innerHTML =
+      this.state.strike === 3
+        ? `<p>${ANSWER_MATCH_TEXT}</p>`
+        : `<p>${text}</p>`;
   }
 }
 
