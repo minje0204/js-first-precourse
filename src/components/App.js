@@ -1,4 +1,5 @@
 import { getAnswer } from '../utils/game.js';
+import { getIsValid } from '../utils/validator.js';
 
 class App {
   constructor($target) {
@@ -22,21 +23,30 @@ class App {
   handleClick(e) {
     if (e.target.id === 'submit') {
       const userInput = this.$input.value;
-      this.play(userInput);
+      if (!getIsValid(userInput)) {
+        alert('입력을 확인해주세요');
+        this.$input.value = '';
+        return;
+      } else {
+        this.play(userInput);
+      }
     }
   }
 
   play(userInput) {
+    let strike = 0;
+    let ball = 0;
     userInput.split('').forEach((number, idx) => {
       if (this.state.answer.indexOf(number) === idx) {
-        this.setState({ strike: this.state.strike + 1 });
+        strike += 1;
         return;
       }
 
       if (this.state.answer.indexOf(number) !== -1) {
-        this.setState({ ball: this.state.ball + 1 });
+        ball += 1;
       }
     });
+    this.setState({ strike: strike, ball: ball });
   }
 
   setState(newState) {
